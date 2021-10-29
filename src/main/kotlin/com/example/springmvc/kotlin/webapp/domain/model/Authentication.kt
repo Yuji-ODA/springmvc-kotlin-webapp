@@ -22,6 +22,8 @@ data class Authentication(
 
 ): Serializable {
     constructor(password: String, validDate: LocalDate): this(null, password, validDate, null)
+
     fun withId(id: Long) = Authentication(id, password, validDate, employee)
+
     fun withEmployee(employee: Employee) = Authentication(id, password, validDate, employee)
 }

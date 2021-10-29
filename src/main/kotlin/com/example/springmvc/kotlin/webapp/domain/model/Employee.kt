@@ -60,11 +60,12 @@ data class Employee(
     fun withDepartment(department: Department) =
         Employee(id, firstName, lastName, sex, birthday, mailAddress, createdAt, updatedAt, deletedAt, department, authentication)
 
-    fun withAuthentication(authentication: Authentication) =
-        Employee(id, firstName, lastName, sex, birthday, mailAddress, createdAt, updatedAt, deletedAt, department, authentication)
+    companion object {
+        fun ofId(id: Long) = Employee(id, null, null, null, null, null, null, null, null, null, null)
+    }
 
     enum class Sex {
-        male, female
+        MALE, FEMALE
     }
 }
 

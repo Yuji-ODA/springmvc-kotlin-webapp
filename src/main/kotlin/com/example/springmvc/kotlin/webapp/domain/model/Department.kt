@@ -34,5 +34,9 @@ data class Department(
     constructor(name: String): this(null, name, null, null, null, null)
 
     fun withId(id: Long) = Department(id, name, createdAt, updatedAt, deletedAt, employees)
-    fun withEmployees(employees: List<Employee>) = Department(id, name, createdAt, updatedAt, deletedAt, employees)
+
+    companion object {
+        fun ofId(id: Long) = Department(id, null, null, null, null, null)
+    }
+
 }

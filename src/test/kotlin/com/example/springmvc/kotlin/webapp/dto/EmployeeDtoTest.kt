@@ -23,7 +23,7 @@ class EmployeeDtoTest {
 
     @BeforeEach
     fun setup() {
-        target = EmployeeDto(1, "高田", "純次", Employee.Sex.male,
+        target = EmployeeDto(1, "高田", "純次", Employee.Sex.MALE,
             LocalDate.of(2021, 10, 29),
             "junji.takada@holywood.star.action.actor")
 
@@ -32,7 +32,7 @@ class EmployeeDtoTest {
                 "\"id\":1," +
                 "\"first_name\":\"高田\"," +
                 "\"last_name\":\"純次\"," +
-                "\"sex\":\"male\"," +
+                "\"sex\":\"MALE\"," +
                 "\"birthday\":\"2021-10-29\"," +
                 "\"mail_address\":\"junji.takada@holywood.star.action.actor\"" +
             "}"
