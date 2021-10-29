@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>user form example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Employees</h1>
+	<table>
+		<tr><th>姓</th><th>名</th><th>性</th><th>生</th><th>宛</th><th>属</th><th>ぱ</th></tr>
+		<tr th:each="employee : ${employees}">
+			<td th:text="${employee.firstName}">姓</td><td  th:text="${employee.lastName}">名</td>
+			<td th:text="${employee.sex}">性</td><td th:text="${employee.birthday}">生</td>
+			<td th:text="${employee.mailAddress}">宛</td><td th:text="${employee.department.name}">属</td>
+			<td th:text="${employee.authentication.validDate}">ぱ</td>
+		</tr>
+	</table>
+</body>
+</html>
