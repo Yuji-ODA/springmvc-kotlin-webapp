@@ -34,6 +34,8 @@ class DataBaseLoader(
         val department2 = Department("いきものがかり").withId(2)
         val department3 = Department("行き係").withId(3)
 
+        departmentRepository.saveAll(listOf(department1, department2, department3))
+
         val employee1 = Employee("坂本", "冬美", Employee.Sex.FEMALE, LocalDate.of(1967, 3, 30), "winter.slope@fc5.so-net.ne.jp")
             .withDepartment(Department.ofId(2))
             .withId(1)
@@ -46,6 +48,8 @@ class DataBaseLoader(
         val employee4 = Employee("坂本", "ちゃん", Employee.Sex.FEMALE, LocalDate.of(1966, 4, 2), "chan@fc5.so-net.ne.jp")
             .withDepartment(Department.ofId(3))
             .withId(4)
+
+        employeeRepository.saveAll(listOf(employee1, employee2, employee3, employee4))
 
         val authentication1 = Authentication("冬美のパスワードは丸見え", LocalDate.of(2067, 3, 30))
             .withEmployee(Employee.ofId(1))
@@ -60,13 +64,6 @@ class DataBaseLoader(
             .withEmployee(Employee.ofId(4))
             .withId(4)
 
-        val departments = listOf(department1, department2, department3)
-        departmentRepository.saveAll(departments)
-
-        val employees = listOf(employee1, employee2, employee3, employee4)
-        employeeRepository.saveAll(employees)
-
-        val authentications = listOf(authentication1, authentication2, authentication3, authentication4)
-        authenticationRepository.saveAll(authentications)
+        authenticationRepository.saveAll(listOf(authentication1, authentication2, authentication3, authentication4))
     }
 }

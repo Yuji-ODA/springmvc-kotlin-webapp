@@ -9,7 +9,8 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employees",
+    uniqueConstraints = [UniqueConstraint(name = "uk_employees_firstName_lastName", columnNames = ["firstName", "lastName"])])
 data class Employee(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

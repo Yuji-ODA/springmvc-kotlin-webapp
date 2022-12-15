@@ -6,6 +6,6 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class WebappApplication
 
-fun main(args: Array<String>) {
-	runApplication<WebappApplication>(*args)
-}
+    fun main(args: Array<String>) {
+        runApplication<WebappApplication>(*args)
+    }

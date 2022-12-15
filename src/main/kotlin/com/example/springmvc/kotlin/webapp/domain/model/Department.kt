@@ -7,7 +7,8 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "departments")
+@Table(name = "departments",
+    uniqueConstraints = [UniqueConstraint(name = "uk_departments_name", columnNames = ["name"])])
 data class Department(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
