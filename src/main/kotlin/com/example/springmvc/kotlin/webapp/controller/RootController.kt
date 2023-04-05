@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class RootController {
-    @GetMapping
+    @GetMapping("/")
     fun root(auth: Authentication?) = "おはようございます、${auth?.name}さま。"
 }

@@ -1,18 +1,24 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.6"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.6.10"
-	kotlin("plugin.spring") version "1.6.10"
-	kotlin("plugin.jpa") version "1.6.10"
-	kotlin("plugin.lombok") version "1.6.10"
+    id("org.springframework.boot") version "3.0.5"
+    id("io.spring.dependency-management") version "1.1.0"
+	kotlin("jvm") version "1.8.10"
+	kotlin("plugin.spring") version "1.8.10"
+	kotlin("plugin.jpa") version "1.8.10"
+	kotlin("plugin.lombok") version "1.8.10"
 }
 
 group = "com.example.springmvc.kotlin"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
+val versions: Map<String, String> by extra {
+    mapOf(
+        "kotest" to "5.5.5",
+        "springmockk" to "4.0.2"
+    )
+}
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
@@ -31,27 +37,38 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	runtimeOnly("com.h2database:h2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "mockito-core")
+    }
 	testImplementation("org.springframework.security:spring-security-test")
 
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    testImplementation("io.kotest:kotest-runner-junit5:${versions["kotest"]}")
+    testImplementation("io.kotest:kotest-assertions-core:${versions["kotest"]}")
+    testImplementation("io.kotest:kotest-property:${versions["kotest"]}")
+
+    testImplementation("com.ninja-squad:springmockk:${versions["springmockk"]}")
+
+//    testImplementation(kotlin("test"))
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
-	}
-}
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
+    }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 
-tasks.wrapper {
-    gradleVersion = "7.4"
+    wrapper {
+        gradleVersion = "8.0.2"
+    }
 }

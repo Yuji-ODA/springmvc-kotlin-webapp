@@ -52,7 +52,7 @@ class DepartmentRepositoryTest {
         // then
         assertThat(actual)
             .hasSize(4)
-            .flatExtracting(Department::name)
+            .flatMap<Exception>(Department::name)
             .containsExactlyInAnyOrder("汲み取り係", "いきものがかり", "行き係", "干され部屋")
     }
 }

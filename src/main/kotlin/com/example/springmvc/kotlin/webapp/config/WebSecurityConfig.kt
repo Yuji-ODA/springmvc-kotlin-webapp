@@ -1,30 +1,36 @@
 package com.example.springmvc.kotlin.webapp.config
 
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.web.SecurityFilterChain
 
+@Configuration
 @EnableWebSecurity(debug = true)
-class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+class WebSecurityConfig {
 
+    @Bean
     @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf().disable()
-            .authorizeRequests()
-                .antMatchers("/actuator/**", "/console/**").permitAll()
-                .anyRequest().authenticated()
-            .and()
-            .headers().frameOptions().sameOrigin()
-            .and()
-            .formLogin()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-    }
+            .authorizeHttpRequests {
+                it.requestMatchers("/actuator/**", "/console/**").permitAll()
+                    .anyRequest().authenticated()
+            }
+            .headers {
+                it.frameOptions().sameOrigin()
+            }
+            .formLogin(withDefaults())
+            .sessionManagement {
+                it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            }
+            .build()
 
     @Bean
     fun users(): UserDetailsService =

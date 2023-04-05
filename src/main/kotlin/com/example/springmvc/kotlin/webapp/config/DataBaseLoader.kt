@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import javax.annotation.PostConstruct
+import jakarta.annotation.PostConstruct
 
 @Component
 @Profile(value = ["default", "local", "test"])
